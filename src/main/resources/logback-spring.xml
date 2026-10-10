@@ -1,0 +1,67 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration scan="false">
+
+    <springProperty
+            scope="context"
+            name="APP_NAME"
+            source="spring.application.name"
+            defaultValue="sandboxclient-challenge"/>
+
+    <springProperty
+            scope="context"
+            name="ENVIRONMENT"
+            source="spring.profiles.active"
+            defaultValue="default"/>
+
+    <property name="PID" value="${PID:-unknown}"/>
+
+    <appender name="CONSOLE" class="ch.qos.logback.core.ConsoleAppender">
+        <encoder class="net.logstash.logback.encoder.LoggingEventCompositeJsonEncoder">
+            <providers>
+                <timestamp>
+                    <fieldName>@timestamp</fieldName>
+                    <timeZone>UTC</timeZone>
+                    <pattern>yyyy-MM-dd'T'HH:mm:ss.SSSX</pattern>
+                </timestamp>
+
+                <logLevel>
+                    <fieldName>severity</fieldName>
+                </logLevel>
+
+                <threadName>
+                    <fieldName>thread_name</fieldName>
+                </threadName>
+
+                <loggerName>
+                    <fieldName>logger_name</fieldName>
+                </loggerName>
+
+                <message/>
+
+                <mdc/>
+
+                <stackTrace>
+                    <fieldName>stacktrace</fieldName>
+                </stackTrace>
+
+                <globalCustomFields>
+                    {
+                    "service.name":"${APP_NAME}",
+                    "service.environment":"${ENVIRONMENT}",
+                    "pid":"${PID}"
+                    }
+                </globalCustomFields>
+            </providers>
+        </encoder>
+    </appender>
+
+    <logger name="org.springframework" level="INFO"/>
+    <logger name="org.hibernate.SQL" level="WARN"/>
+    <logger name="org.hibernate.orm.jdbc.bind" level="WARN"/>
+    <logger name="com.sandboxclient" level="INFO"/>
+
+    <root level="INFO">
+        <appender-ref ref="CONSOLE"/>
+    </root>
+
+</configuration>
