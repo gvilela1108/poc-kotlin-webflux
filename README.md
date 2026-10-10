@@ -1,4 +1,4 @@
-# Desafio Backend da SandboxClient — Kotlin, Spring Boot, Redis e API com múltiplos formatos
+# Desafio Backend SandboxClient - Kotlin, Spring Boot, Redis e API com múltiplos formatos
 
 ![Kotlin](https://img.shields.io/badge/Kotlin-2.2.0-7F52FF)
 ![Java](https://img.shields.io/badge/Java-21-orange)
@@ -19,7 +19,7 @@ A implementação foi estruturada com foco na separação de responsabilidades, 
 
 A API disponibiliza os seguintes campos para cada localização:
 
-| Field | Description |
+| Campo | Descrição |
 |---|---|
 | `name` | Nome do estabelecimento |
 | `city` | Cidade |
@@ -34,18 +34,18 @@ O identificador da localização também é utilizado pelo endpoint de consulta 
 
 ## Tecnologias utilizadas
 
-- **Kotlin** and **JDK 21**
-- **Spring Boot / Spring WebFlux** for HTTP endpoints and reactive request handling
-- **Spring Data and H2** for local persistence (according to the active application profile)
-- **Redis** for caching
-- **Feign** for calls to the external SandboxClient API
-- **Resilience4j** for circuit-breaker protection
-- **Gradle** for builds and dependency management
-- **Docker Compose** for running the application and its supporting services
-- **OpenAPI/Swagger** for API documentation
-- **JUnit 5** for automated tests
-- **JaCoCo** for test coverage reporting
-- **ktlint** for Kotlin code style checks
+- **Kotlin** e **JDK 21**
+- **Spring Boot / Spring WebFlux** para endpoints HTTP e processamento reativo de requisições
+- **Spring Data e H2** para persistência local (conforme o profile ativo da aplicação)
+- **Redis** para cache
+- **Feign** para chamadas à API externa da SandboxClient
+- **Resilience4j** para proteção com circuit breaker
+- **Gradle** para compilação e gerenciamento de dependências
+- **Docker Compose** para executar a aplicação e os serviços de apoio
+- **OpenAPI/Swagger** para documentação da API
+- **JUnit 5** para testes automatizados
+- **JaCoCo** para geração de relatórios de cobertura de testes
+- **ktlint** para verificações de estilo do código Kotlin
 
 ## Arquitetura e responsabilidades
 
@@ -85,14 +85,14 @@ GET /api/stores?page=0&size=20
 Accept: application/json
 ```
 
-CSV example:
+Exemplo de requisição CSV:
 
 ```http
 GET /api/stores?page=0&size=20
 Accept: text/csv
 ```
 
-XML example:
+Exemplo de requisição XML:
 
 ```http
 GET /api/stores?page=0&size=20
@@ -106,7 +106,7 @@ GET /api/stores/{id}
 Accept: application/json
 ```
 
-Example:
+Exemplo:
 
 ```bash
 curl -H "Accept: application/json" "http://localhost:8080/api/stores/620416"
@@ -130,7 +130,7 @@ Se estiverem habilitados na configuração atual, a interface OpenAPI e os endpo
 
 A API negocia o formato da resposta por meio do cabeçalho `Accept`.
 
-| Format | Example `Accept` header |
+| Formato | Exemplo de cabeçalho `Accept` |
 |---|---|
 | JSON | `application/json` |
 | CSV | `text/csv` |
@@ -170,8 +170,8 @@ Os nomes exatos das variáveis devem corresponder aos arquivos de configuração
 Pré-requisitos:
 
 - JDK 21
-- Docker and Docker Compose, if running the supporting services in containers
-- Access to the SandboxClient sandbox/API and a valid API credential
+- Docker e Docker Compose, caso os serviços de apoio sejam executados em contêineres
+- Acesso à sandbox/API da SandboxClient e uma credencial de API válida
 
 Compile o projeto e execute os testes com o Gradle Wrapper:
 
@@ -179,7 +179,7 @@ Compile o projeto e execute os testes com o Gradle Wrapper:
 ./gradlew clean test
 ```
 
-On Windows PowerShell:
+No Windows PowerShell:
 
 ```powershell
 .\gradlew.bat clean test
@@ -258,7 +258,7 @@ A API externa da SandboxClient está fora do controle da aplicação. A proteç�
 
 Um componente centralizado de tratamento de exceções mantém as respostas consistentes e evita expor detalhes internos aos consumidores. Parâmetros de query inválidos devem ser mapeados para erros do cliente, em vez de registrados como falhas inesperadas do servidor.
 
-### Configuração through environment variables
+### Configuração por variáveis de ambiente
 
 URLs externas, credenciais, portas e configurações de cache variam conforme o ambiente. A configuração por variáveis de ambiente mantém a aplicação portátil e evita que credenciais sejam enviadas ao controle de versão.
 
@@ -272,17 +272,3 @@ URLs externas, credenciais, portas e configurações de cache variam conforme o 
 - Revisar as chaves e a invalidação do cache em cenários com paginação e atualizações concorrentes.
 - Manter artefatos gerados, arquivos de banco local e segredos fora do repositório.
 
-## Documentação do repositório
-
-Estrutura de arquivos recomendada:
-
-```text
-README.md                  # Original challenge instructions — keep unchanged
-README-implementation.md   # This project/implementation documentation
-.env.example               # Safe environment-variable template
-.env                       # Local secrets; do not commit
-```
-
-## Licença
-
-Este repositório foi criado para a submissão de um desafio técnico. Consulte as instruções originais do desafio para verificar os termos aplicáveis.
